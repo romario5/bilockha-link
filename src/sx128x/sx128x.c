@@ -14,7 +14,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 Maintainer: Miguel Luis, Gregory Cristian and Matthieu Verdy
 */
 #include <string.h>
-#include "sx1281.h"
+#include "sx128x.h"
 
 /*!
  * \brief Radio registers definition
@@ -30,7 +30,7 @@ typedef struct
  * \brief Radio hardware registers initialization definition
  */
 // { Address, RegValue }
-#define RADIO_INIT_REGISTERS_VALUE  { NULL }
+#define RADIO_INIT_REGISTERS_VALUE  { }
 
 /*!
  * \brief Radio hardware registers initialization
@@ -921,9 +921,9 @@ void SX1281ProcessIrqs( void )
     {
         if( IrqState == true )
         {
-            __disable_irq( );
+            // __disable_irq( );
             IrqState = false;
-            __enable_irq( );
+            // __enable_irq( );
         }
         else
         {

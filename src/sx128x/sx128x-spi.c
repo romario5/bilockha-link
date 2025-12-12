@@ -1,5 +1,4 @@
-#include "sx1281-spi.h"
-#include "hal-spi.h"
+#include "sx128x-spi.h"
 
 volatile bool blockingDmaFlag;
 
@@ -26,7 +25,7 @@ void SX1281SpiInOut( uint8_t *txBuffer, uint8_t *rxBuffer, uint16_t size )
 
 void SX1281SpiIn( uint8_t *txBuffer, uint16_t size )
 {
-    SPI_Send( SpiHandle, txBuffer, size, HAL_MAX_DELAY );
+    SPI_Send( SpiHandle, txBuffer, size, 100 );
 }
 
 void HAL_SPI_TxRxCpltCallback(spi_t *hspi)

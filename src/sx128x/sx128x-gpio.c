@@ -1,4 +1,4 @@
-#include "sx1281-gpio.h"
+#include "sx128x-gpio.h"
 
 static GpioIrqHandler *GpioIrq[146] = { NULL };
 
@@ -12,7 +12,7 @@ static GpioIrqHandler *GpioIrq[146] = { NULL };
  */
 uint8_t GpioGetBitPos( uint16_t GPIO_Pin )
 {
-    return (uint8_t) PinPos;
+    return (uint8_t) GPIO_Pin;
 }
 
 
@@ -68,7 +68,7 @@ void SX1281GpioLaunchIrqHandler( uint16_t GPIO_Pin )
  */
 void SX1281GpioWrite( uint16_t GPIO_Pin, uint32_t value )
 {
-    HAL_GPIO_WritePin( GPIO_Pin , ( GPIO_PinState ) value );
+    HAL_GPIO_WritePin( GPIO_Pin , value );
 }
 
 /*!

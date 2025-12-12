@@ -1,12 +1,5 @@
-/*
- * sx1281-defines.h
- *
- *  Created on: Jul 25, 2025
- *      Author: Roman
- */
-
-#ifndef SX1281_INC_SX1281_DEFINES_H_
-#define SX1281_INC_SX1281_DEFINES_H_
+#ifndef SX128X_DEFINES_H_
+#define SX128X_DEFINES_H_
 
 
 
@@ -14,7 +7,7 @@
 /*!
  * \brief Enables/disables driver debug features
  */
-#define SX1281_DEBUG                                0
+#define SX128X_DEBUG                                0
 
 /*!
  * \brief Hardware IO IRQ callback function definition
@@ -906,4 +899,4 @@ typedef union
 }RadioStatus_t;
 
 
-#endif /* SX1281_INC_SX1281_DEFINES_H_ */
+#endif /* SX128X_DEFINES_H_ */

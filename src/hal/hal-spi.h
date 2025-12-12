@@ -1,8 +1,9 @@
 #ifndef SPI_H
 #define SPI_H
 
-#include "gpio.h"
+#include "hal-gpio.h"
 #include <stdint.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,8 +14,8 @@ extern "C" {
 
 typedef int8_t spi_status_t;
 
-const spi_status_t SPI_OK = 1;
-const spi_status_t SPI_ER = 0;
+extern const spi_status_t SPI_OK;
+extern const spi_status_t SPI_ER;
 
 typedef struct spi_pinout {
     int sck;
@@ -32,9 +33,9 @@ typedef struct spi_ctx {
 } spi_t;
 
 
-spi_t SPI_Init(uint32_t speed_hz, spi_pinout_t pinout);
-spi_status_t SPI_Send(spi_t* spi, uint8_t* tx_buffer, uint32_t length);
-spi_status_t SPI_SendAndReceive(spi_t* spi, uint8_t* tx_buffer, uint8_t* rx_buffer, uint32_t length);
+spi_t SPI_Init(uint32_t speed_hz);
+spi_status_t SPI_Send(spi_t* spi, uint8_t* tx_buffer, uint32_t length, uint32_t timeout);
+spi_status_t SPI_SendAndReceive(spi_t* spi, uint8_t* tx_buffer, uint8_t* rx_buffer, uint32_t length, uint32_t timeout);
 
 
 #ifdef __cplusplus

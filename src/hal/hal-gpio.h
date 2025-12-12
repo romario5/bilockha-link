@@ -1,10 +1,11 @@
-#ifndef GPIO_H
-#define GPIO_H
+#ifndef HAL_GPIO_H
+#define HAL_GPIO_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include <stdint.h>
 
 typedef uint8_t  gpio_status_t;
 typedef int      gpio_fd_t;
@@ -12,25 +13,25 @@ typedef uint8_t  gpio_mode_t;
 typedef char*    gpio_dir_t;
 
 
-const gpio_status_t GPIO_OK = 1;
-const gpio_status_t GPIO_ER = 0;
+extern const gpio_status_t GPIO_OK;
+extern const gpio_status_t GPIO_ER;
 
-const uint8_t GPIO_VAL_HIGH = 1;
-const uint8_t GPIO_VAL_LOW  = 0;
+extern const uint8_t GPIO_VAL_HIGH;
+extern const uint8_t GPIO_VAL_LOW;
 
-const gpio_mode_t GPIO_MODE_R = 0;
-const gpio_mode_t GPIO_MODE_W = 1;
+extern const gpio_mode_t GPIO_MODE_R;
+extern const gpio_mode_t GPIO_MODE_W;
 
-const gpio_dir_t GPIO_DIR_IN  = "in";
-const gpio_dir_t GPIO_DIR_OUT = "out";
+extern const gpio_dir_t GPIO_DIR_IN;
+extern const gpio_dir_t GPIO_DIR_OUT;
 
-gpio_fd_t HAL_GPIO_Open(int pin, gpio_dir_t dir, gpio_mode_t mode);
-void HAL_GPIO_WritePin(gpio_fd_t fd, uint8_t value);
-uint8_t HAL_GPIO_ReadPin(gpio_fd_t fd);
+void HAL_GPIO_Open(int pin, gpio_dir_t dir);
+void HAL_GPIO_WritePin(int pin, uint8_t value);
+uint8_t HAL_GPIO_ReadPin(int pin);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* GPIO_H */
+#endif /* HAL_GPIO_H */

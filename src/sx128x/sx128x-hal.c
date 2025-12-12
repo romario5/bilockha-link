@@ -13,8 +13,9 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 Maintainer: Miguel Luis, Gregory Cristian and Matthieu Verdy
 */
-#include "sx1281-hal.h"
+#include "sx128x-hal.h"
 #include "hal-gpio.h"
+#include <unistd.h>
 
 
 int NSS_PIN = 48;
@@ -37,6 +38,10 @@ int NRESET_PIN = 54;
 #define MAX_HAL_BUFFER_SIZE   0xFFF
 
 #define IRQ_HIGH_PRIORITY  0
+
+void HAL_Delay(uint32_t delay) {
+  usleep(delay * 1000);
+}
 
 /*!
  * Radio driver structure initialization
@@ -142,7 +147,7 @@ void SX1281HalClearInstructionRam( void )
     halTxBuffer[0] = RADIO_WRITE_REGISTER;
     halTxBuffer[1] = ( IRAM_START_ADDRESS >> 8 ) & 0x00FF;
     halTxBuffer[2] = IRAM_START_ADDRESS & 0x00FF;
-    for( uint16_t index = 0; index < IRAM_SIZE; index++ )
+    for( uint16_t index = 0; index < MAX_HAL_BUFFER_SIZE - 3; index++ )
     {
         halTxBuffer[3+index] = 0x00;
     }
@@ -160,7 +165,7 @@ void SX1281HalClearInstructionRam( void )
 
 void SX120HalWakeup( void )
 {
-    __disable_irq( );
+    //__disable_irq( );
 
     SX1281GpioWrite( NSS_PIN, 0 );
 
@@ -174,7 +179,7 @@ void SX120HalWakeup( void )
     // Wait for chip to be ready.
     SX1281HalWaitOnBusy( );
 
-    __enable_irq( );
+    //__enable_irq( );
 }
 
 void SX1281HalWriteCommand( RadioCommands_t command, uint8_t *buffer, uint16_t size )

@@ -13,14 +13,15 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 Maintainer: Miguel Luis, Gregory Cristian and Matthieu Verdy
 */
-#ifndef __SX1281_H__
-#define __SX1281_H__
+#ifndef __SX128X_H__
+#define __SX128X_H__
 
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "sx1281-hal.h"
-#include "sx1281-radio.h"
+#include <stdio.h>
+#include "sx128x-hal.h"
+#include "sx128x-radio.h"
 
 
 /*!
@@ -471,4 +472,4 @@ int8_t SX1281ParseHexFileLine( char* line );
  */
 int8_t SX1281GetHexFileLineFields( char* line, uint8_t *bytes, uint16_t *addr, uint16_t *num, uint8_t *code );
 
-#endif // __SX1281_H__
+#endif // __SX128X_H__

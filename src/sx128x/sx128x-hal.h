@@ -13,22 +13,21 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 Maintainer: Miguel Luis and Gregory Cristian
 */
-#ifndef __SX1281_HAL_H__
-#define __SX1281_HAL_H__
+#ifndef __SX128X_HAL_H__
+#define __SX128X_HAL_H__
 
 #include <stdbool.h>
 #include <string.h>
-#include "main.h"
-#include "sx1281-gpio.h"
-#include "sx1281-radio.h"
-#include "sx1281-spi.h"
-#include "sx1281.h"
+#include "sx128x-gpio.h"
+#include "sx128x-radio.h"
+#include "sx128x-spi.h"
+#include "sx128x.h"
 
 
-extern int NSS_PIN    = 48;
-extern int BUSY_PIN   = 4;
-extern int DIO1_PIN   = 145;
-extern int NRESET_PIN = 54;
+extern int NSS_PIN;
+extern int BUSY_PIN;
+extern int DIO1_PIN;
+extern int NRESET_PIN;
 
 
 
@@ -137,4 +136,4 @@ uint8_t SX1281HalGetDioStatus( void );
 
 void SX1281HalIoIrqInit( DioIrqHandler **irqHandlers );
 
-#endif // __SX1281_HAL_H__
+#endif // __SX128X_HAL_H__

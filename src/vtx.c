@@ -1,16 +1,51 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include "hal-gpio.h"
 #include "hal-spi.h"
-#include "sx1280-hal.h"
-#include "sx1280.h"
+#include "sx128x-hal.h"
+#include "sx128x.h"
 
 uint8_t USE_FLRC = 0;
 
 uint32_t FREQUENCY = 2460000000;
-uint8_t TX_OUTPUT_POWER = 13
+uint8_t TX_OUTPUT_POWER = 13;
 
 char testMsg[5];
+uint8_t ready = 1;
+
+
+void OnTxDone( void )
+{
+	ready = 1;
+}
+
+void OnRxDone( void )
+{
+	ready = 1;
+}
+
+void OnTxTimeout( void )
+{
+	ready = 1;
+}
+
+void OnRxTimeout( void )
+{
+	ready = 1;
+}
+
+void OnRxError( IrqErrorCode_t errorCode )
+{
+	
+}
+
+void OnCadDone( bool channelActivityDetected )
+{
+	
+}
+
 
 RadioCallbacks_t Callbacks =
 {
@@ -28,17 +63,22 @@ RadioCallbacks_t Callbacks =
 int main(void)
 {
     // Initialize pins.
-    NSS_PIN    = HAL_GPIO_Open( 48,  GPIO_DIR_OUT );
-    BUSY_PIN   = HAL_GPIO_Open( 4,   GPIO_DIR_IN  );
-    NRESET_PIN = HAL_GPIO_Open( 54,  GPIO_DIR_OUT );
-    DIO1_PIN   = HAL_GPIO_Open( 145, GPIO_DIR_IN  );
+    NSS_PIN = 48;
+    BUSY_PIN = 4;
+    NRESET_PIN = 54;
+    DIO1_PIN = 145;
+    
+    HAL_GPIO_Open( NSS_PIN,    GPIO_DIR_OUT );
+    HAL_GPIO_Open( BUSY_PIN,   GPIO_DIR_IN  );
+    HAL_GPIO_Open( NRESET_PIN, GPIO_DIR_OUT );
+    HAL_GPIO_Open( DIO1_PIN,   GPIO_DIR_IN  );
 
 
     // Init SPI interface.
     spi_t spi = SPI_Init(2000000);
 
 
-    // Set SX1280 parameters.
+    // Set SX128X parameters.
     SX1281SetSPI(&spi);
     SX1281.Init( &Callbacks );
     SX1281.SetRegulatorMode( USE_DCDC );
@@ -94,7 +134,7 @@ int main(void)
     while (1)
     {
         SX1281ProcessIrqs();
-        SX1281.SendPayload(data, c, RX_TX_SINGLE);
+        SX1281.SendPayload(testMsg, 5, RX_TX_SINGLE);
     }
 
     return 0;

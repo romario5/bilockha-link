@@ -1,12 +1,5 @@
-/*
- * sx1281-hal-spi.h
- *
- *  Created on: Jul 25, 2025
- *      Author: Roman
- */
-
-#ifndef SX1281_INC_SX1281_SPI_H_
-#define SX1281_INC_SX1281_SPI_H_
+#ifndef SX128X_SPI_H_
+#define SX128X_SPI_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,11 +8,13 @@ extern "C" {
 #include "stddef.h"
 #include <stdint.h>
 #include <stdbool.h>
+
+// Include HAL library for SPI communication.
 #include "hal-spi.h"
 
-extern SPI_HandleTypeDef* SpiHandle;
+extern spi_t* SpiHandle;
 
-void SX1281SetSPI(SPI_HandleTypeDef *hspi, uint8_t useDMA);
+void SX1281SetSPI(spi_t *hspi);
 
 void SX1281SpiInit( void );
 
@@ -32,4 +27,4 @@ void SX1281SpiIn( uint8_t *txBuffer, uint16_t size );
 }
 #endif
 
-#endif /* SX1281_INC_SX1281_SPI_H_ */
+#endif /* SX128X_SPI_H_ */

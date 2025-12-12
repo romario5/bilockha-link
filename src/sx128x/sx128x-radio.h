@@ -16,7 +16,7 @@ Maintainer: Miguel Luis, Gregory Cristian and Matthieu Verdy
 #ifndef __RADIO_H__
 #define __RADIO_H__
 
-#include "sx1281-defines.h"
+#include "sx128x-defines.h"
 
 /*!
  * \brief Class holding the basic communications with a radio

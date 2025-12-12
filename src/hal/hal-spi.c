@@ -1,5 +1,5 @@
-#include "spi.h"
-#include "gpio.h"
+#include "hal-spi.h"
+#include "hal-gpio.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +9,8 @@
 #include <sys/ioctl.h>
 #include <stdint.h>
 
+const spi_status_t SPI_OK = 1;
+const spi_status_t SPI_ER = 0;
 
 // Initialize SPI interface.
 spi_t SPI_Init(uint32_t speed_hz)
@@ -17,7 +19,7 @@ spi_t SPI_Init(uint32_t speed_hz)
 		.speed_hz = speed_hz,
 	};
 	
-	GPIO_Write(spi.nss_fd, GPIO_VAL_HIGH);
+	HAL_GPIO_WritePin(spi.nss_fd, GPIO_VAL_HIGH);
 
 	if ((spi.fd = open(SPI_DEVICE_PATH, O_RDWR)) < 0) {
         perror("Failed to open SPI device");
@@ -57,11 +59,11 @@ spi_status_t SPI_Send(spi_t* spi, uint8_t* tx_buffer, uint32_t length, uint32_t 
         .bits_per_word = 8,
     };
 	
-	GPIO_Write(spi->nss_fd, GPIO_VAL_LOW);
+	HAL_GPIO_WritePin(spi->nss_fd, GPIO_VAL_LOW);
 	
 	int res = ioctl(spi->fd, SPI_IOC_MESSAGE(1), &transfer);
 	
-	GPIO_Write(spi->nss_fd, GPIO_VAL_HIGH);
+	HAL_GPIO_WritePin(spi->nss_fd, GPIO_VAL_HIGH);
 
 	if (res < 0) {
         perror("Failed to perform SPI transfer");
@@ -75,7 +77,7 @@ spi_status_t SPI_Send(spi_t* spi, uint8_t* tx_buffer, uint32_t length, uint32_t 
 // Sends and recieves data (full-duplex).
 spi_status_t SPI_SendAndReceive(spi_t* spi, uint8_t* tx_buffer, uint8_t* rx_buffer, uint32_t length, uint32_t timeout)
 {
-	memset(rx_buffer, 0, *rx_length);
+	memset(rx_buffer, 0, length);
     struct spi_ioc_transfer transfer = {
         .tx_buf = (unsigned long)tx_buffer,
         .rx_buf = (unsigned long)rx_buffer,
@@ -85,11 +87,11 @@ spi_status_t SPI_SendAndReceive(spi_t* spi, uint8_t* tx_buffer, uint8_t* rx_buff
         .bits_per_word = 8,
     };
 	
-	GPIO_Write(spi->nss_fd, GPIO_VAL_LOW);
+	HAL_GPIO_WritePin(spi->nss_fd, GPIO_VAL_LOW);
 	
 	int res = ioctl(spi->fd, SPI_IOC_MESSAGE(1), &transfer);
 	
-	GPIO_Write(spi->nss_fd, GPIO_VAL_HIGH);
+	HAL_GPIO_WritePin(spi->nss_fd, GPIO_VAL_HIGH);
 
 	if (res < 0) {
         perror("Failed to perform SPI transfer");
