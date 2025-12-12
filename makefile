@@ -13,7 +13,7 @@ DEP = $(OBJ:.o=.d)
 
 all: $(TARGET)
 
-$(TARGET): vtx.c sx1280.o
+$(TARGET): src/vtx.c sx1280.o
 	$(CC) $(CFLAGS) vtx.c sx1280.o -o $(TARGET) $(LDFLAGS)
 	
 -include $(DEP)
